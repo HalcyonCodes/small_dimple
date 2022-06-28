@@ -33,7 +33,7 @@ class _NormalMiddlePickerToolBarState extends State<NormalMiddlePickerToolBar> {
   void initState() {
     super.initState();
 
-    if (widget.toolBarUtil.pageUtil!.pageController!.page != null) {
+    if (widget.toolBarUtil.pageUtil!.pageController != null) {
       double scrollValue =
           widget.toolBarUtil.pageUtil!.pageValueTranslateScrollValue!(
               widget.toolBarUtil.pageUtil!.pageController!,

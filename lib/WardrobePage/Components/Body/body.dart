@@ -14,7 +14,7 @@ class Body extends StatefulWidget {
   final int boxId;
   final double height;
   final PageUtil pageUtil;
-  final double paddingHeight;
+  final double paddingTopHeight;
   const Body({
     Key? key,
     required this.animationController,
@@ -23,7 +23,7 @@ class Body extends StatefulWidget {
     //required this.pageController,
     required this.height,
     required this.pageUtil,
-    required this.paddingHeight,
+    required this.paddingTopHeight,
   }) : super(key: key);
 
   @override
@@ -51,12 +51,13 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
-      height: widget.height - widget.paddingHeight - 48,
+      height: widget.height - widget.paddingTopHeight - 48,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           GestureChequerListPage(
             height: widget.height,
+            paddingTopHeight: widget.paddingTopHeight,
             animationController: widget.animationController,
             bodyUtil: bodyUtil!,
             viewModel: widget.viewModel,

@@ -10,12 +10,14 @@ class GestureChequerListPage extends StatefulWidget {
   final BodyUtil bodyUtil;
   final AnimationController animationController;
   final double height;
+  final double paddingTopHeight;
 
   const GestureChequerListPage(
       {Key? key,
       required this.animationController,
       required this.bodyUtil,
       required this.viewModel,
+      required this.paddingTopHeight,
       //required this.pageController,
       required this.height})
       : super(key: key);
@@ -29,7 +31,7 @@ class _GestureChequerListPageState extends State<GestureChequerListPage> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
-      height: widget.height,
+      height: widget.height - widget.paddingTopHeight - 48,
       child: SizedBox(
         /*onLongPressStart: onLongPressStart,
         onLongPress: onLongPress,

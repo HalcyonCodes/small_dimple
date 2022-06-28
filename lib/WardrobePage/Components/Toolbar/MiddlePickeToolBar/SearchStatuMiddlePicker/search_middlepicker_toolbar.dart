@@ -9,23 +9,38 @@ import '../../../../../WardrobePage/Components/Toolbar/ToolbarUtil/util_toolbar.
 import './Conmponents/animated_searchpicker_middlepicker_toolbar.dart';
 import '../../../../ViewModel/wardrobe_page_viewmodel.dart';
 
-class SearchMiddlePickerToolBar extends StatelessWidget {
+
+
+class SearchMiddlePickerToolBar extends StatefulWidget {
+
+   SearchMiddlePickerToolBar({Key? key,required this.animationController, required this.toolBarUtil, required this.viewModel}) : super(key: key);
   final AnimationController animationController;
   final ToolBarUtil toolBarUtil;
   final WardrobePageViewModel viewModel;
   final FocusNode verifyNode = FocusNode();
 
-  SearchMiddlePickerToolBar(
-      {Key? key,
-      required this.animationController,
-      required this.toolBarUtil,
-      required this.viewModel})
-      : super(key: key) {
+
+  @override
+  State<SearchMiddlePickerToolBar> createState() => _SearchMiddlePickerToolBarState();
+}
+
+class _SearchMiddlePickerToolBarState extends State<SearchMiddlePickerToolBar> {
+
+  @override
+  void initState() {
+  super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      animationController.reset();
-      await animationController.forward();
+      if(!widget.animationController.isCompleted){
+        //widget.animationController.reset();
+        await widget.animationController.forward();
+      }
     });
   }
+
+
+ 
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -39,10 +54,10 @@ class SearchMiddlePickerToolBar extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           AnimatedCustomIconButton(
-            animationController: animationController,
+            animationController: widget.animationController,
             animation: Tween<double>(begin: 0.0, end: 1.0).animate(
                 CurvedAnimation(
-                    parent: animationController,
+                    parent: widget.animationController,
                     curve: const Interval((1 / 3) * 0, 1.0,
                         curve: Curves.fastOutSlowIn))),
             iconPath: 'assets/icons/systems/放大镜.svg',
@@ -55,11 +70,11 @@ class SearchMiddlePickerToolBar extends StatelessWidget {
           ),
           Expanded(
             child: AnimatedSearchPicker(
-              animationController: animationController,
-              verifyNode: verifyNode,
+              animationController: widget.animationController,
+              verifyNode: widget.verifyNode,
               animation: Tween<double>(begin: 0.0, end: 1.0).animate(
                   CurvedAnimation(
-                      parent: animationController,
+                      parent: widget.animationController,
                       curve: const Interval((1 / 3) * 1, 1.0,
                           curve: Curves.fastOutSlowIn))),
             ),
@@ -70,21 +85,21 @@ class SearchMiddlePickerToolBar extends StatelessWidget {
             width: 16,
           ),
           AnimatedCustomIconButton(
-            animationController: animationController,
+            animationController: widget.animationController,
             animation: Tween<double>(begin: 0.0, end: 1.0).animate(
                 CurvedAnimation(
-                    parent: animationController,
+                    parent: widget.animationController,
                     curve: const Interval((1 / 3) * 2, 1.0,
                         curve: Curves.fastOutSlowIn))),
             iconPath: 'assets/icons/systems/向左.svg',
             isEnable: true,
             color: Colors.black,
             onClick: () {
-              verifyNode.unfocus();
-              animationController.reverse().then((value) {
-                toolBarUtil.setStatus!(0);
-                toolBarUtil.setToolBarStatus(0);
-                toolBarUtil.refreshToolBar!();
+                widget.verifyNode.unfocus();
+                widget.animationController.reverse().then((value) {
+                widget.toolBarUtil.setStatus!(0);
+                widget.toolBarUtil.setToolBarStatus(0);
+                widget.toolBarUtil.refreshToolBar!();
               });
             },
           )

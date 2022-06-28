@@ -25,9 +25,13 @@ class FutureWardrobePage extends StatefulWidget {
 }
 
 class _FutureWardrobePageState extends State<FutureWardrobePage> {
+
+  late Future<int> data;
+
   @override
   void initState() {
     super.initState();
+    data = widget.viewModel.refreshData();
   }
 
   @override
@@ -41,7 +45,7 @@ class _FutureWardrobePageState extends State<FutureWardrobePage> {
         pageUtil: widget.pageUtil,
       ),
       body: FutureBuilder<int>(
-          future: widget.viewModel.refreshData(),
+          future: data,
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
@@ -60,7 +64,7 @@ class _FutureWardrobePageState extends State<FutureWardrobePage> {
                   return const Text('ddddk');
                 } else {
                   return Body(
-                    paddingHeight: MediaQuery.of(context).padding.top,
+                    paddingTopHeight: MediaQuery.of(context).padding.top,
                     height: MediaQuery.of(context).size.height -
                         MediaQuery.of(context).padding.top -
                         48,
